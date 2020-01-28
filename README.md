@@ -17,8 +17,8 @@ By using a monad, the action type is *always the same* and it is only the payloa
 For example:
 
 ```javascript
-const people = () => {
-  const renderPeople = () => loadPeopleResult.matchWith({
+const people = props => {
+  const renderPeople = () => props.people.get('loadPeopleResult').matchWith({
     Empty: () => 'Loading',
     Loading: () => 'Loading',
     Success: ({data}) => data.toJS().map(p => <Person key={p.url} {...p} />),
