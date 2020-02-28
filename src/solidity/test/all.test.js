@@ -1,0 +1,1 @@
+require('./access-control/all.test');

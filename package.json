@@ -1,0 +1,19 @@
+{
+  "name": "ether-egg",
+  "version": "1.0.0",
+  "description": "Ester eggs on the blockchain. Because why not.",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valerioleo/ether-egg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valerioleo/ether-egg/issues"
+  },
+  "homepage": "https://github.com/valerioleo/ether-egg#readme"
+}
