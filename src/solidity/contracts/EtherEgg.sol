@@ -78,19 +78,15 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   * @notice Claim an egg with a guess
   * @param guess - the guess string to claim an egg
   */
-  function claimEgg(string memory guess) public returns (bool) {
-    if (isEggClaimable(guess)) {
-      uint256 claimedEggId = generateId(guess);
+  function claimEgg(string memory guess) public {
+    require(isEggClaimable(guess));
+    uint256 claimedEggId = generateId(guess);
 
-      _transferFrom(address(this), msg.sender, claimedEggId);
+    _transferFrom(address(this), msg.sender, claimedEggId);
 
-      _setTokenURI(claimedEggId, guess);
+    _setTokenURI(claimedEggId, guess);
 
-      emit eggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender);
-      eggsFound = eggsFound + 1;
-
-      return true;
-    }
-    return false;
+    emit eggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender);
+    eggsFound = eggsFound + 1;
   }
 }
