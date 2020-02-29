@@ -1,1 +1,1 @@
-require('./access-control/all.test');
+require('./ether-egg/all.test');
