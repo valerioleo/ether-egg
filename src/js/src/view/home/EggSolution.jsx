@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import {withRouter} from 'react-router-dom';
+import qs from 'qs';
 import {Typography} from '@material-ui/core';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
 import SmartContractOperationFormConnection from '../../bridge/forms/SmartContractOperationFormConnection';
@@ -11,8 +13,12 @@ const HuntEgg = props => {
     title,
     smartContract,
     callMethod,
-    formData
+    formData,
+    location,
+    initialize
   } = props;
+
+  const {guess} = qs.parse(location.search, {ignoreQueryPrefix: true});
 
   const isEggClaimable = 'isEggClaimable';
   const claimEgg = 'claimEgg';
@@ -23,7 +29,20 @@ const HuntEgg = props => {
     .safeGetIn(['callSmartContractMethodResult', isEggClaimable]);
 
   const claimEggResult = smartContract
-    .safeGetIn(['callSmartContractMethodResult', claimEgg]);
+    .safeGetIn(['callSmartContractMethodResult', isEggClaimable]);
+
+  useEffect(() => {
+    if(guess) {
+      callMethod({
+        contractInterface: 'EtherEgg',
+        method: isEggClaimable,
+        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+        args: [guess]
+      });
+
+      initialize({_solution: guess});
+    }
+  }, []);
 
   useEffect(() => {
     huntEggResult.mapPattern('Success', null, ({data}) => {
@@ -74,7 +93,9 @@ const HuntEgg = props => {
 
 export default SmartContractConnection(
   SmartContractOperationFormConnection(
-    HuntEgg
+    withRouter(
+      HuntEgg
+    )
   )
 );
 
