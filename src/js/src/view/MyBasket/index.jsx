@@ -1,39 +1,41 @@
 import React, {useEffect, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Section from '../common/Section';
-import Button from '../common/Button';
-import Person from './Person';
-import AddPersonForm from './AddPersonForm';
+import {compareAddress} from '../../utils/eth-utils/data/address';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
 
 const contractAddress = '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7';
-const userAddress = '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7';
 
 const Home = props => {
   const {
     smartContract,
-    getEvents
+    getEvents,
+    defaultAddress
   } = props;
 
   const getEventsResult = smartContract
     .safeGetIn(['getContractEventsResult', contractAddress, 'allEvents']);
 
+  const getDefaultAccountResult = smartContract
+    .get('getDefaultAccountResult');
+
   const [userEvents, setUserEvents] = useState([]);
 
   useEffect(() => {
-    getEvents({
-      contractInterface: 'EtherEgg',
-      contractAddress
+    getDefaultAccountResult.mapPattern('Success', null, () => {
+      getEvents({
+        contractInterface: 'EtherEgg',
+        contractAddress
+      });
     });
-  }, []);
+  }, [getDefaultAccountResult]);
 
   useEffect(() => {
     getEventsResult.mapPattern('Success', null, ({data}) => {
       const events = data
         .toJS()
-        .filter(evt => evt.returnValues.to === userAddress);
+        .filter(evt => compareAddress(evt.returnValues.to, defaultAddress));
 
-      debugger
       setUserEvents(events);
     });
   }, [getEventsResult]);
@@ -43,10 +45,12 @@ const Home = props => {
   ));
 
   return (
-    <Section
-      title='Your Basket!'
-    >
-      {renderUserEvents()}
+    <Section title='Your Basket!'>
+      {
+        getEventsResult.mapPattern('Success', 'Loading your eggs...', () => userEvents.length
+          ? renderUserEvents()
+          : <Typography>You don't have any egg.</Typography>)
+      }
     </Section>
   );
 };
