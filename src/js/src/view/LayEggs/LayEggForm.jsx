@@ -39,10 +39,10 @@ const LayEggForm = props => {
 
   const isLayingEgg = layEggResult.mapPattern('Loading', false, () => true);
 
-  return !isLayingEgg
+  return isLayingEgg
     ? (
       <div style={{textAlign: 'center', padding: 50}}>
-        <Typography>We're laying your Egg. Hold tight.</Typography>
+        <Typography>To lay your Egg, confirm transaction on Metamask.</Typography>
         <CircularProgress />
         <div>
           <img src='https://i.giphy.com/media/3zoXQVUYUrw995ojf1/giphy.webp' />

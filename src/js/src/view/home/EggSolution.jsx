@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Typography} from '@material-ui/core';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
 import SmartContractOperationFormConnection from '../../bridge/forms/SmartContractOperationFormConnection';
 import SmartContractOperationForm from '../common/SmartContractOperationForm';
@@ -42,11 +43,17 @@ const HuntEgg = props => {
   });
 
   const claimEggButton = () => (
-    <AsyncButton
-      onClick={onClaimEgg}
-      asyncButtonText='Claim Egg NOW!'
-      asyncResult={claimEggResult}
-    />
+    <div style={{textAlign: 'center', padding: 50}}>
+      <Typography>You have found a super rare Egg!</Typography>
+      <div>
+        <img src='https://i.giphy.com/media/ftegeAlQ32zFLEKjrk/giphy.webp' />
+      </div>
+      <AsyncButton
+        onClick={onClaimEgg}
+        asyncButtonText='Claim Egg NOW!'
+        asyncResult={claimEggResult}
+      />
+    </div>
 
   );
 
