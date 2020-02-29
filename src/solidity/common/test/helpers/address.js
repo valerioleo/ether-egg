@@ -4,7 +4,7 @@ const getOwner = accounts => accounts[0];
 const getBunny = accounts => accounts[1];
 const getHunter = accounts => accounts[2];
 
-const getTclActors = accounts => ({
+const getActors = accounts => ({
   owner: getOwner(accounts),
   bunny: getBunny(accounts),
   hunter: getHunter(accounts)
@@ -15,5 +15,5 @@ module.exports = {
   getBunny,
   getHunter,
   getOwner,
-  getTclActors
+  getActors
 };

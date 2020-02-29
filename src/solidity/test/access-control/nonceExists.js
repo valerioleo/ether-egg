@@ -1,4 +1,4 @@
-const {getTclActors} = require('../../common/test/helpers/address');
+const {getActors} = require('../../common/test/helpers/address');
 const {deployMockRestrictedAccess} = require('../helpers/deploy');
 const {getPrivateKeyFromAddress} = require('../../common/test/helpers/signatures');
 const {getAccessToken} = require('../../common/utils/accessControl');
@@ -9,7 +9,7 @@ contract('AccessControl: nonceExists', accounts => {
   const nonce = SYMBOL;
   let methodSelector;
 
-  const {mainController, authorisedHolder} = getTclActors(accounts);
+  const {owner, bunny} = getActors(accounts);
   let accessControlledContract;
   let accessToken;
 
@@ -19,8 +19,8 @@ contract('AccessControl: nonceExists', accounts => {
 
     ({accessToken} = getAccessToken({
       method: methodSelector,
-      privKey: getPrivateKeyFromAddress(mainController),
-      bearer: authorisedHolder,
+      privKey: getPrivateKeyFromAddress(owner),
+      bearer: bunny,
       nonce,
       restrictedContractAddress: accessControlledContract.address
     }));
@@ -34,7 +34,7 @@ contract('AccessControl: nonceExists', accounts => {
 
   it('should return true for used nonces', async () => {
     await accessControlledContract
-      .doSomething(nonce, accessToken, {from: authorisedHolder});
+      .doSomething(nonce, accessToken, {from: bunny});
 
     const exists = await accessControlledContract.nonceExists(nonce);
 

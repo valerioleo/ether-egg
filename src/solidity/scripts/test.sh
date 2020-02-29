@@ -24,7 +24,7 @@ ganache_running() {
 }
 
 start_ganache() {
-  local mnemonic="master large deliver reject helmet patrol post wheel behave ordinary bundle ivory"
+  local mnemonic="slab almost earth kid inhale pioneer include manual noodle urban dragon powder"
 
   if [ "$SOLIDITY_COVERAGE" = true ]; then
     node_modules/.bin/testrpc-sc --network mocha --gasLimit 8000000 --port "$testrpc_port" --mnemonic "${mnemonic}" --defaultBalanceEther '200000' > /dev/null &

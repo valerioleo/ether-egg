@@ -1,5 +1,5 @@
 const {shouldFailWithMessage} = require('../../common/test/helpers/utils');
-const {getTclActors} = require('../../common/test/helpers/address');
+const {getActors} = require('../../common/test/helpers/address');
 const {getAccessToken} = require('../../common/utils/accessControl');
 const {deployMockRestrictedAccess} = require('../helpers/deploy');
 const {getPrivateKeyFromAddress} = require('../../common/test/helpers/signatures');
@@ -10,7 +10,7 @@ contract('AccessControl: _whenAuthorised', accounts => {
   const nonce = SYMBOL;
   let methodSelector;
 
-  const {mainController, authorisedHolder, dodgyGuy} = getTclActors(accounts);
+  const {owner, bunny, hunter} = getActors(accounts);
   let accessControlledContract;
   let accessToken;
 
@@ -19,9 +19,9 @@ contract('AccessControl: _whenAuthorised', accounts => {
     methodSelector = getMethodSelectorFromAbi(accessControlledContract.abi, 'doSomething');
 
     ({accessToken} = getAccessToken({
-      privKey: getPrivateKeyFromAddress(mainController),
+      privKey: getPrivateKeyFromAddress(owner),
       method: methodSelector,
-      bearer: authorisedHolder,
+      bearer: bunny,
       nonce,
       restrictedContractAddress: accessControlledContract.address
     }));
@@ -29,40 +29,40 @@ contract('AccessControl: _whenAuthorised', accounts => {
 
   it('should allow authorised users', async () => {
     await accessControlledContract
-      .doSomething(nonce, accessToken, {from: authorisedHolder});
+      .doSomething(nonce, accessToken, {from: bunny});
   });
 
   it('should not allow impersonated users', async () => {
     await shouldFailWithMessage(
       accessControlledContract
-        .doSomething(nonce, accessToken, {from: dodgyGuy}),
+        .doSomething(nonce, accessToken, {from: hunter}),
       'Invalid Access Token'
     );
   });
 
   it('should not allow same nonce twice', async () => {
     await accessControlledContract
-      .doSomething(nonce, accessToken, {from: authorisedHolder});
+      .doSomething(nonce, accessToken, {from: bunny});
 
     await shouldFailWithMessage(
       accessControlledContract
-        .doSomething(nonce, accessToken, {from: authorisedHolder}),
+        .doSomething(nonce, accessToken, {from: bunny}),
       'Nonce already used'
     );
   });
 
   it('should not allow non-signer roles to create access token', async () => {
     const {accessToken: invalidAccessToken} = getAccessToken({
-      privKey: getPrivateKeyFromAddress(authorisedHolder),
+      privKey: getPrivateKeyFromAddress(bunny),
       method: methodSelector,
-      bearer: authorisedHolder,
+      bearer: bunny,
       nonce,
       restrictedContractAddress: accessControlledContract.address
     });
 
     await shouldFailWithMessage(
       accessControlledContract
-        .doSomething(nonce, invalidAccessToken, {from: authorisedHolder}),
+        .doSomething(nonce, invalidAccessToken, {from: bunny}),
       'Invalid Access Token'
     );
   });

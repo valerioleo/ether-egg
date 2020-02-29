@@ -1,4 +1,4 @@
-const {getTclActors} = require('../../common/test/helpers/address');
+const {getActors} = require('../../common/test/helpers/address');
 const {deployAccessControl} = require('../helpers/deploy');
 const {getAccessToken} = require('../../common/utils/accessControl');
 const {getMethodSelectorFromAbi} = require('../../common/utils/eth-utils');
@@ -8,7 +8,7 @@ contract('AccessControl: getPayload', accounts => {
   const SYMBOL = 'ERC';
   const nonce = SYMBOL;
 
-  const {authorisedHolder, mainController} = getTclActors(accounts);
+  const {bunny, hunter} = getActors(accounts);
   let accessControlInstance;
   let ethSignedMessage;
   let methodSelector;
@@ -18,8 +18,8 @@ contract('AccessControl: getPayload', accounts => {
     methodSelector = getMethodSelectorFromAbi(accessControlInstance.abi, 'getPayload');
 
     ({ethSignedMessage} = getAccessToken({
-      privKey: getPrivateKeyFromAddress(mainController),
-      bearer: authorisedHolder,
+      privKey: getPrivateKeyFromAddress(bunny),
+      bearer: hunter,
       method: methodSelector,
       nonce,
       restrictedContractAddress: accessControlInstance.address
@@ -31,7 +31,7 @@ contract('AccessControl: getPayload', accounts => {
       .getPayload(
         methodSelector,
         nonce,
-        {from: authorisedHolder}
+        {from: bunny}
       );
 
     expect(hash).to.be.equal(ethSignedMessage);
