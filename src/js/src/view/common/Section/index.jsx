@@ -30,7 +30,7 @@ const Section = props => {
       <Grid container justify="space-between" alignItems='flex-end' direction='row' className={classes.sectionHeader}>
         <Grid item xs className={classes.sectionHeaderText}>
           <Grid container alignItems='center'>
-            <Typography variant='h5' color='black' fontWeight='semiBold' inline>{title}</Typography>
+            <Typography variant='h5'>{title}</Typography>
             {renderLabel()}
           </Grid>
           <Typography variant='body2'>{subtitle}</Typography>

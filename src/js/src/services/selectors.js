@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import {asyncDataGet} from '../utils/fn';
 
-export const getDefaultAccountFromState = state => state.common.account
+export const getDefaultAccountFromState = state => state.smartContract
   .get('getDefaultAccountResult')
   .mapPattern('Success', '', asyncDataGet('defaultAccount'));
 

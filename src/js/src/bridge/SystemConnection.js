@@ -1,7 +1,8 @@
 import {connect} from 'react-redux';
 import {
   pushNotification,
-  resetNotification
+  resetNotification,
+  getDefaultAccount
 } from '../data/system/systemActions';
 
 export default System => {
@@ -10,6 +11,7 @@ export default System => {
   });
 
   const mapDispatchToProps = dispatch => ({
+    getDefaultAccount: (dispatch)['∘'](getDefaultAccount),
     pushNotification: (dispatch)['∘'](pushNotification),
     resetNotification: (dispatch)['∘'](resetNotification)
   });

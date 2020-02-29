@@ -8,8 +8,8 @@ import {getDefaultAccountFromState} from '../services/selectors';
 
 export default SmartContractConnection => {
   const mapStateToProps = state => ({
-    smartContract: state.smartContract
-    // defaultAddress: getDefaultAccountFromState(state)
+    smartContract: state.smartContract,
+    defaultAddress: getDefaultAccountFromState(state)
   });
 
   const mapDispatchToProps = dispatch => ({

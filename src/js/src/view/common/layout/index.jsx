@@ -16,7 +16,7 @@ const Layout = props => {
           variant='h5'
           fontWeight='bold'
         >
-          Welcome to Star Wars Dom!
+          Eggs paradise
         </Typography>
         <Menu menu={menuItems}/>
       </div>
