@@ -1,5 +1,5 @@
-var EtherEgg = artifacts.require("./EtherEgg.sol");
+const EtherEgg = artifacts.require('EtherEgg');
 
-module.exports = (deployer) => {
+module.exports = deployer => {
   deployer.deploy(EtherEgg);
 };

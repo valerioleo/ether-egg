@@ -9,7 +9,7 @@ contract('EtherEgg: claimEgg', accounts => {
     etherEgg = await deployEtherEgg(accounts);
   });
 
-  it('should lay an egg and pass it to EtherEgg contract', async () => {
+  it('should lay an egg and transfer it to hunter', async () => {
     const solution = 'alice';
     let eggOwner;
 
