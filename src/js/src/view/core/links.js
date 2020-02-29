@@ -8,9 +8,14 @@ export default [
         icon: '🏠'
       },
       {
-        name: 'People',
-        link: '/people',
-        icon: '👨🏻‍🎤'
+        name: 'My basket',
+        link: '/my-basket',
+        icon: '🧺'
+      },
+      {
+        name: 'Lay egg',
+        link: '/lay-egg',
+        icon: '🐰'
       }
     ]
   }

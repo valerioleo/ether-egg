@@ -1,59 +1,73 @@
-import React, {useEffect} from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, {useEffect, useState} from 'react';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
+import SmartContractOperationFormConnection from '../../bridge/forms/SmartContractOperationFormConnection';
+import SmartContractOperationForm from '../common/SmartContractOperationForm';
+import AsyncButton from '../common/AsyncButton';
+import EtherEggDefinition from '../../../../solidity/build/contracts/EtherEgg.json';
 
-const Home = props => {
+const HuntEgg = props => {
   const {
+    title,
     smartContract,
-    callMethod
+    callMethod,
+    formData
   } = props;
 
-  const eggNumberResult = smartContract
-    .safeGetIn(['callSmartContractMethodResult', 'eggNumber']);
+  const isEggClaimable = 'isEggClaimable';
+  const claimEgg = 'claimEgg';
 
-  const generateIdResult = smartContract
-    .safeGetIn(['callSmartContractMethodResult', 'generateId']);
+  const [correctGuess, setCorrectGuess] = useState();
 
-  useEffect(() => {
-    callMethod({
-      contractInterface: 'EtherEgg',
-      method: 'eggNumber',
-      contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-      args: []
-    });
+  const huntEggResult = smartContract
+    .safeGetIn(['callSmartContractMethodResult', isEggClaimable]);
 
-    callMethod({
-      contractInterface: 'EtherEgg',
-      method: 'generateId',
-      contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-      args: ['abc']
-    });
-  }, []);
-
-  const eggsCount = eggNumberResult.mapPattern('Success', 0, ({data}) => data.get('result'));
+  const claimEggResult = smartContract
+    .safeGetIn(['callSmartContractMethodResult', claimEgg]);
 
   useEffect(() => {
-    generateIdResult.mapPattern('Success', null, ({data}) => {
-      const eggId = data.get('result');
+    huntEggResult.mapPattern('Success', null, ({data}) => {
+      const d = data.get('result');
 
-      debugger
-
-      callMethod({
-        contractInterface: 'EtherEgg',
-        method: 'layEgg',
-        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-        args: [eggId]
-      });
+      if(d) {
+        setCorrectGuess(formData.SmartContractOperation.values._solution);
+      }
     });
-  }, [generateIdResult]);
+  }, [huntEggResult]);
 
-  return (
-    <>
-      <Typography variant='h1'>Hunt your Egg! {eggsCount}</Typography>
-      <Typography variant='body2'>To start hunting, use type your solution in the input box.</Typography>
-    </>
+  const onClaimEgg = () => callMethod({
+    contractInterface: 'EtherEgg',
+    method: claimEgg,
+    contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+    args: [correctGuess]
+  });
+
+  const claimEggButton = () => (
+    <AsyncButton
+      onClick={onClaimEgg}
+      asyncButtonText='Claim Egg NOW!'
+      asyncResult={claimEggResult}
+    />
+
   );
+
+  const isEggClaimableOperation = EtherEggDefinition.abi
+    .find(op => op.name === isEggClaimable);
+
+  return !correctGuess
+    ? (
+      <SmartContractOperationForm
+        operation={isEggClaimableOperation}
+        contractInterface='EtherEgg'
+        contractAddress='0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7'
+        title={title}
+      />
+    )
+    : claimEggButton();
 };
 
-export default SmartContractConnection(Home);
+export default SmartContractConnection(
+  SmartContractOperationFormConnection(
+    HuntEgg
+  )
+);
 
