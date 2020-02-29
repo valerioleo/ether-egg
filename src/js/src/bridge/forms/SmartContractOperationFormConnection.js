@@ -1,6 +1,5 @@
 import {connect} from 'react-redux';
 import {reduxForm, initialize} from 'redux-form';
-import {getDefaultAccountFromState} from '../../services/selectors';
 import {
   required,
   validateEthereum,
@@ -91,12 +90,12 @@ export default SmartContractOperation => {
     form: 'SmartContractOperation',
     validate,
     initialValues: {data: ''},
-    onSubmit: (values, dispatch, {contractAddress, operation}) => {
+    onSubmit: (values, dispatch, {contractInterface, contractAddress, operation}) => {
       const {name: method} = operation;
       const args = getParams(values, operation);
 
       const callMethodData = {
-        contractInterface: operation.contractInterface,
+        contractInterface,
         method,
         contractAddress,
         args

@@ -70,8 +70,8 @@ const SmartContractOperationForm = props => {
   const renderResult = ({result}) => {
     const convertResult = convertSmartContractResultByMethodFactory(operation.name);
     return (
-      <Paper>
-        <Typography variant='body2'>
+      <Paper style={{padding: 5}}>
+        <Typography variant='body2' align='center'>
           {String(convertResult(result))}
         </Typography>
       </Paper>
@@ -81,6 +81,7 @@ const SmartContractOperationForm = props => {
   return (
     <>
       {renderInputs(operation.inputs, defaultAccount)}
+      {resultData ? renderResult(resultData) : null}
       <AsyncButton
         onClick={handleSubmit}
         asyncButtonText='Submit'
@@ -92,7 +93,6 @@ const SmartContractOperationForm = props => {
         disabled={disabled}
         disabledReason={disabledReason}
       />
-      {resultData ? renderResult(resultData) : null}
     </>
   );
 };
