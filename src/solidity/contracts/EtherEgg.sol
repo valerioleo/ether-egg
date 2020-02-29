@@ -75,10 +75,10 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   }
 
   /**
-  * @notice Lay an egg with an ID
-  * @param egg_id - the egg_id for the egg being laid
+  * @notice Claim an egg with a guess
+  * @param guess - the guess string to claim an egg
   */
-  function claimEgg(address minter, string memory guess) public returns (bool) {
+  function claimEgg(string memory guess) public returns (bool) {
 
   if (isEggClaimable(guess)) {
 
