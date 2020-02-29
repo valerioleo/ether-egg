@@ -1,0 +1,14 @@
+.history
+**/node_modules
+design/
+.DS_Store
+app.log
+**/*/app*.log*
+**/*/*audit.json
+**/coverage
+**/coverageEnv
+**/coverage.json
+**/yarn-error.log
+operations/
+.idea
+.vscode/settings.json
