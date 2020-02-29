@@ -26,7 +26,7 @@ module.exports = {
       gas: 7638796,
       gasPrice: web3.utils.toWei('11', 'gwei'),
       skipDryRun: true
-    }
+    },
   },
 
   compilers: {
