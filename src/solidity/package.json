@@ -22,9 +22,11 @@
     "ethereumjs-wallet": "^0.6.3",
     "folktale": "^2.3.2",
     "openzeppelin-solidity": "^2.4.0",
+    "truffle-hdwallet-provider": "^1.0.17",
     "web3": "1.2.4"
   },
   "devDependencies": {
+    "@openzeppelin/contracts": "^2.5.0",
     "chai": "^4.2.0",
     "chai-bignumber": "^3.0.0",
     "date-fns": "^2.0.0-alpha.8",
