@@ -29,7 +29,7 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
   /**
   * @notice Generate an eggId from a solution
-  * @param _solution - the solution required to claim this Id
+  * @param solution - the solution required to claim this Id
   */
   function generateId(string memory solution) public view returns (uint256) {
     return uint256(keccak256(abi.encodePacked(solution, address(this))));
@@ -38,37 +38,41 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
   /**
   * @notice Check if egg is claimable
-  * @param _solution - the solution required to claim this Id
+  * @param solution - the solution required to claim this Id
   */
   function isEggClaimable(string memory solution) public view returns (bool) {
 
     uint256 eggId = generateId(solution);
+
+    if(_exists(eggId)) {
     address owner = ownerOf(eggId);
 
     return address(this) == owner;
   }
+  else {return false;}
+}
 
   /**
   * @notice Lay an egg with an ID
-  * @param egg_id - the egg_id for the egg being laid
+  * @param eggId - the egg_id for the egg being laid
   */
-  function layEgg(uint256 egg_id) public returns (bool) {
+  function layEgg(uint256 eggId) public returns (bool) {
     uint256 _egg_number = allEggs.length + 1;
     eggNumber = eggNumber + 1;
 
     Egg memory _egg = Egg({
-      id: egg_id,
+      id: eggId,
       bunnyAddress: msg.sender,
       eggNumber: _egg_number
     });
 
-    eggs[egg_id] = _egg;
-    allEggs.push(egg_id);
+    eggs[eggId] = _egg;
+    allEggs.push(eggId);
     bunnyEggs[msg.sender].push(_egg);
 
-    _mint(address(this), egg_id);
+    _mint(address(this), eggId);
 
-    emit eggLaid(egg_id, msg.sender);
+    emit eggLaid(eggId, msg.sender);
 
     return true;
 
