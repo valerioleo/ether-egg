@@ -8,8 +8,11 @@ const Home = props => {
     callMethod
   } = props;
 
-  const callSmartContractMethodResult = smartContract
+  const eggNumberResult = smartContract
     .safeGetIn(['callSmartContractMethodResult', 'eggNumber']);
+
+  const generateIdResult = smartContract
+    .safeGetIn(['callSmartContractMethodResult', 'generateId']);
 
   useEffect(() => {
     callMethod({
@@ -18,9 +21,31 @@ const Home = props => {
       contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
       args: []
     });
+
+    callMethod({
+      contractInterface: 'EtherEgg',
+      method: 'generateId',
+      contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+      args: ['abc']
+    });
   }, []);
 
-  const eggsCount = callSmartContractMethodResult.mapPattern('Success', 0, ({data}) => data.get('result'));
+  const eggsCount = eggNumberResult.mapPattern('Success', 0, ({data}) => data.get('result'));
+
+  useEffect(() => {
+    generateIdResult.mapPattern('Success', null, ({data}) => {
+      const eggId = data.get('result');
+
+      debugger
+
+      callMethod({
+        contractInterface: 'EtherEgg',
+        method: 'layEgg',
+        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+        args: [eggId]
+      });
+    });
+  }, [generateIdResult]);
 
   return (
     <>
