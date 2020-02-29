@@ -1,57 +1,25 @@
 import React, {useEffect} from 'react';
-import Typography from '@material-ui/core/Typography';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
+import SmartContractOperationForm from '../common/SmartContractOperationForm';
+import EtherEggDefinition from '../../../../solidity/build/contracts/EtherEgg.json';
 
 const Home = props => {
-  const {
-    smartContract,
-    callMethod
-  } = props;
+  const {methodName} = props;
 
-  const eggNumberResult = smartContract
-    .safeGetIn(['callSmartContractMethodResult', 'eggNumber']);
-
-  const generateIdResult = smartContract
-    .safeGetIn(['callSmartContractMethodResult', 'generateId']);
-
-  useEffect(() => {
-    callMethod({
+  const operation = EtherEggDefinition.abi
+    .filter(op => op.name === methodName)
+    .map(op => ({
+      ...op,
       contractInterface: 'EtherEgg',
-      method: 'eggNumber',
-      contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-      args: []
-    });
-
-    callMethod({
-      contractInterface: 'EtherEgg',
-      method: 'generateId',
-      contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-      args: ['abc']
-    });
-  }, []);
-
-  const eggsCount = eggNumberResult.mapPattern('Success', 0, ({data}) => data.get('result'));
-
-  useEffect(() => {
-    generateIdResult.mapPattern('Success', null, ({data}) => {
-      const eggId = data.get('result');
-
-      debugger
-
-      callMethod({
-        contractInterface: 'EtherEgg',
-        method: 'layEgg',
-        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
-        args: [eggId]
-      });
-    });
-  }, [generateIdResult]);
+      title: op.name
+    }))[0];
 
   return (
-    <>
-      <Typography variant='h1'>Hunt your Egg! {eggsCount}</Typography>
-      <Typography variant='body2'>To start hunting, use type your solution in the input box.</Typography>
-    </>
+    <SmartContractOperationForm
+      operation={operation}
+      contractInterface='EtherEgg'
+      contractAddress='0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7'
+    />
   );
 };
 

@@ -5,7 +5,7 @@ import {
   sendTransaction
 } from '../utils/eth-utils/contracts/Contract';
 import {ContractResult} from '../utils/fn/monads/ContractResult';
-import {fromTokenDecimals, hexToUtf8} from '../utils/eth-utils/core/utils';
+import {hexToUtf8, toHex} from '../utils/eth-utils/core/utils';
 
 const isStruct = outputs => outputs.length > 1;
 
@@ -51,14 +51,9 @@ export const executeSmartContractMethod = async (
   return convertResult(stateMutability, result, outputs);
 };
 
-const stringifyBoolean = val => val ? 'True' : 'False';
-const convertCanTransferResult = result => [stringifyBoolean(result[0]), hexToUtf8(result[2])];
-
 export const convertSmartContractResultByMethodFactory = method => {
   switch(method) {
-    case 'canTransfer':
-    case 'canTransferFrom': return convertCanTransferResult;
-    case 'balanceOf': return result => fromTokenDecimals(result);
+    case 'generateId': return toHex;
     default: return result => result;
   }
 };

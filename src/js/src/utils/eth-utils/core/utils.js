@@ -48,6 +48,8 @@ const asciiToHex = str => getWeb3().utils.asciiToHex(str);
 const hexToUtf8 = hex => getWeb3().utils.hexToUtf8(hex);
 const encodeBytes32Param = str => asciiToHex(str);
 
+const {BN} = getWeb3().utils;
+
 const EMPTY_SOLIDITY_DATA = hexToBytes(toHex('empty_bytes_data'));
 
 module.exports = {
@@ -66,5 +68,6 @@ module.exports = {
   encodeBytes32Param,
   getSolNow,
   EMPTY_SOLIDITY_DATA,
-  getTransactionUrl
+  getTransactionUrl,
+  BN
 };
