@@ -31,8 +31,8 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   * @notice Generate an eggId from a solution
   * @param _solution - the solution required to claim this Id
   */
-  function generateId(string memory _solution) public view returns (uint256) {
-    return uint256(keccak256(abi.encodePacked(_solution, address(this))));
+  function generateId(string memory solution) public view returns (uint256) {
+    return uint256(keccak256(abi.encodePacked(solution, address(this))));
   // does hashing thing (including sender address & the message itself) to return Id
   }
 
@@ -40,9 +40,9 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   * @notice Check if egg is claimable
   * @param _solution - the solution required to claim this Id
   */
-  function isEggClaimable(string memory _solution) public view returns (bool) {
+  function isEggClaimable(string memory solution) public view returns (bool) {
 
-    uint256 eggId = generateId(_solution);
+    uint256 eggId = generateId(solution);
     address owner = ownerOf(eggId);
 
     return address(this) == owner;
