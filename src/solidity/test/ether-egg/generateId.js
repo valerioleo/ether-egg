@@ -15,6 +15,6 @@ contract('EtherEgg: generateId', accounts => {
     const resultHash = await etherEgg.generateId(solution);
     const web3Hash = web3.utils.sha3(solution);
 
-    expect(resultHash).to.be.equal(web3Hash);
+    expect(`0x${resultHash.toString('hex')}`).to.be.equal(web3Hash);
   });
 });

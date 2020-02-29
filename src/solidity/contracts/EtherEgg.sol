@@ -23,8 +23,8 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG"), ERC721Mintable {
   * @notice Generate an eggId from a solution
   * @param _solution - the solution required to claim this Id
   */
-  function generateId(string memory _solution) public view returns (bytes32) {
-    return keccak256(abi.encodePacked(_solution));  
+  function generateId(string memory _solution) public view returns (uint256) {
+    return uint256(keccak256(abi.encodePacked(_solution)));
   // does hashing thing (including sender address & the message itself) to return Id
   }
 
@@ -32,9 +32,9 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG"), ERC721Mintable {
   * @notice Check if egg is claimable
   * @param _solution - the solution required to claim this Id
   */
-  function isEggClaimable(string memory _solution) public returns (bool) {
+  function isEggClaimable(string memory _solution) public view returns (bool) {
 
-    bytes32 eggId = generateId(_solution);
+    uint256 eggId = generateId(_solution);
 
     return true;
   }
