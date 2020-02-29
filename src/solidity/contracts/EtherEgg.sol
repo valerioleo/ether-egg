@@ -31,7 +31,7 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   * @notice Generate an eggId from a solution
   * @param _solution - the solution required to claim this Id
   */
-  function generateId(string memory _solution) public view returns (uint256) {
+  function generateId(string memory _solution) public pure returns (uint256) {
     return uint256(keccak256(abi.encodePacked(_solution)));
   // does hashing thing (including sender address & the message itself) to return Id
   }
