@@ -1,7 +1,7 @@
 const {deployEtherEgg} = require('../helpers/deploy');
 const {getActors} = require('../../common/test/helpers/address');
 
-contract.only('EtherEgg: claimEgg', accounts => {
+contract('EtherEgg: claimEgg', accounts => {
   let etherEgg;
   const {hunter} = getActors(accounts);
 
@@ -11,13 +11,17 @@ contract.only('EtherEgg: claimEgg', accounts => {
 
   it('should lay an egg and pass it to EtherEgg contract', async () => {
     const solution = 'alice';
+    let eggOwner;
 
     const eggId = await etherEgg.generateId(solution);
+    await etherEgg.layEgg(eggId);
 
-    await etherEgg.claimEgg(eggId, {from: hunter});
+    eggOwner = await etherEgg.ownerOf(eggId);
+    expect(eggOwner).to.be.equal(etherEgg.address);
 
-    const eggOwner = await etherEgg.ownerOf(eggId);
+    await etherEgg.claimEgg(solution, {from: hunter});
 
+    eggOwner = await etherEgg.ownerOf(eggId);
     expect(eggOwner).to.be.equal(hunter);
   });
 });

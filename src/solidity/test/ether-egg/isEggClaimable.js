@@ -43,7 +43,7 @@ contract('EtherEgg: isEggClaimable', accounts => {
     isEggClaimable = await etherEgg.isEggClaimable(solution);
     expect(isEggClaimable).to.be.equal(true);
 
-    await etherEgg.claimEgg(eggId, {from: hunter});
+    await etherEgg.claimEgg(solution, {from: hunter});
 
     isEggClaimable = await etherEgg.isEggClaimable(solution);
     expect(isEggClaimable).to.be.equal(false);
