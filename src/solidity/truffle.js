@@ -21,7 +21,7 @@ module.exports = {
       gasPrice: 1      // <-- Use this low gas price
     },
     kovan: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://kovan.infura.io/v3/365e4a0eb877456b9978ba10f7604d2d', 0, 9),
+      provider: () => new HDWalletProvider(mnemonic, 'https://kovan.infura.io/v3/813ba28a534f416793957d3fe470923c', 0, 9),
       network_id: 42,
       gas: 7638796,
       gasPrice: web3.utils.toWei('11', 'gwei'),

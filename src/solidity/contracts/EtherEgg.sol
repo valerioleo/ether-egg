@@ -25,14 +25,14 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   mapping (address => Egg[]) public bunnyEggs;
 
   event eggLaid(uint256 _newEggId, address _newEggIssuer);
-  event eggFound(uint256 _foundEggId, address _foundEggIssuer, address _foundEggHunter);
+  event eggFound(uint256 _foundEggId, address _foundEggIssuer, address _foundEggHunter, string guess, uint256 _foundEggNumber);
 
   /**
   * @notice Generate an eggId from a solution
   * @param _solution - the solution required to claim this Id
   */
-  function generateId(string memory _solution) public pure returns (uint256) {
-    return uint256(keccak256(abi.encodePacked(_solution)));
+  function generateId(string memory _solution) public view returns (uint256) {
+    return uint256(keccak256(abi.encodePacked(_solution, address(this))));
   // does hashing thing (including sender address & the message itself) to return Id
   }
 
@@ -86,7 +86,7 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
     _setTokenURI(claimedEggId, guess);
 
-    emit eggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender);
+    emit eggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender, guess, eggs[claimedEggId].eggNumber);
     eggsFound = eggsFound + 1;
   }
 }
