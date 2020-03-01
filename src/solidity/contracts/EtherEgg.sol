@@ -24,8 +24,8 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
   mapping (uint256 => Egg) public eggs;
   mapping (address => Egg[]) public bunnyEggs;
 
-  event eggLaid(uint256 _newEggId, address _newEggIssuer);
-  event eggFound(uint256 _foundEggId, address _foundEggIssuer, address _foundEggHunter, string guess, uint256 _foundEggNumber);
+  event EggLaid(uint256 _newEggId, address _newEggIssuer);
+  event EggFound(uint256 _foundEggId, address _foundEggIssuer, address _foundEggHunter, string guess, uint256 _foundEggNumber);
 
   /**
   * @notice Generate an eggId from a solution
@@ -44,17 +44,17 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
     uint256 eggId = generateId(solution);
 
-    if(_exists(eggId)) {
-    address owner = ownerOf(eggId);
+    if (_exists(eggId)) {
+      address owner = ownerOf(eggId);
 
-    return address(this) == owner;
+      return address(this) == owner;
+    }
+    return false;
   }
-  else {return false;}
-}
 
   /**
   * @notice Lay an egg with an ID
-  * @param eggId - the egg_id for the egg being laid
+  * @param eggId - the Egg id for the egg being laid
   */
   function layEgg(uint256 eggId) public returns (bool) {
     uint256 _egg_number = allEggs.length + 1;
@@ -72,7 +72,7 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
     _mint(address(this), eggId);
 
-    emit eggLaid(eggId, msg.sender);
+    emit EggLaid(eggId, msg.sender);
 
     return true;
 
@@ -90,7 +90,7 @@ contract EtherEgg is ERC721Full("EtherEgg", "EGG") {
 
     _setTokenURI(claimedEggId, guess);
 
-    emit eggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender, guess, eggs[claimedEggId].eggNumber);
+    emit EggFound(claimedEggId, eggs[claimedEggId].bunnyAddress, msg.sender, guess, eggs[claimedEggId].eggNumber);
     eggsFound = eggsFound + 1;
   }
 }

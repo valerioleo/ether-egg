@@ -4,7 +4,7 @@ import Section from '../common/Section';
 import {compareAddress} from '../../utils/eth-utils/data/address';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
 
-const contractAddress = '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7';
+const contractAddress = ETHER_EGG_KOVAN_ADDRESS;
 
 const Home = props => {
   const {
@@ -14,7 +14,7 @@ const Home = props => {
   } = props;
 
   const getEventsResult = smartContract
-    .safeGetIn(['getContractEventsResult', contractAddress, 'allEvents']);
+    .safeGetIn(['getContractEventsResult', contractAddress, 'EggFound']);
 
   const getDefaultAccountResult = smartContract
     .get('getDefaultAccountResult');
@@ -25,7 +25,8 @@ const Home = props => {
     getDefaultAccountResult.mapPattern('Success', null, () => {
       getEvents({
         contractInterface: 'EtherEgg',
-        contractAddress
+        contractAddress,
+        eventName: 'EggFound'
       });
     });
   }, [getDefaultAccountResult]);
@@ -34,14 +35,16 @@ const Home = props => {
     getEventsResult.mapPattern('Success', null, ({data}) => {
       const events = data
         .toJS()
-        .filter(evt => compareAddress(evt.returnValues.to, defaultAddress));
+        // eslint-disable-next-line no-underscore-dangle
+        .filter(evt => compareAddress(evt.returnValues._foundEggHunter, defaultAddress));
 
       setUserEvents(events);
     });
   }, [getEventsResult]);
 
   const renderUserEvents = () => userEvents.map(evt => (
-    <Typography key={evt.transactionHash}>EggID: {evt.returnValues.tokenId}</Typography>
+    // eslint-disable-next-line no-underscore-dangle
+    <Typography key={evt.transactionHash}>EggID: {evt.returnValues._foundEggId} - {evt.returnValues.guess}</Typography>
   ));
 
   return (

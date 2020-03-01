@@ -1,8 +1,8 @@
 import {BN} from '../core/utils';
 
 const EtherEggConvertor = {
-  generateId: ({_solution}) => [_solution],
-  layEgg: value => [new BN(value.egg_id)]
+  generateId: ({solution}) => [solution],
+  layEgg: value => [new BN(value.eggId)]
 };
 
 const OperationsParamsConvertor = {

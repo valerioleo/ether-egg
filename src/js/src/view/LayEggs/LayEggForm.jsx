@@ -28,7 +28,7 @@ const LayEggForm = props => {
       callMethod({
         contractInterface: 'EtherEgg',
         method: layEgg,
-        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+        contractAddress: ETHER_EGG_KOVAN_ADDRESS,
         args: [new BN(id)]
       });
     });
@@ -42,7 +42,11 @@ const LayEggForm = props => {
   return isLayingEgg
     ? (
       <div style={{textAlign: 'center', padding: 50}}>
-        <Typography>To lay your Egg, confirm transaction on Metamask.</Typography>
+        <Typography>
+          <strong>
+          To lay your Egg, confirm transaction on Metamask.
+          </strong>
+        </Typography>
         <CircularProgress />
         <div>
           <img src='https://i.giphy.com/media/3zoXQVUYUrw995ojf1/giphy.webp' />
@@ -53,7 +57,7 @@ const LayEggForm = props => {
       <SmartContractOperationForm
         operation={generateIdOperation}
         contractInterface='EtherEgg'
-        contractAddress='0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7'
+        contractAddress={ETHER_EGG_KOVAN_ADDRESS}
         title={title}
       />
     );

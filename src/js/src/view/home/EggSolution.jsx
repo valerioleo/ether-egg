@@ -36,11 +36,11 @@ const HuntEgg = props => {
       callMethod({
         contractInterface: 'EtherEgg',
         method: isEggClaimable,
-        contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+        contractAddress: ETHER_EGG_KOVAN_ADDRESS,
         args: [guess]
       });
 
-      initialize({_solution: guess});
+      initialize({solution: guess});
     }
   }, []);
 
@@ -48,8 +48,8 @@ const HuntEgg = props => {
     huntEggResult.mapPattern('Success', null, ({data}) => {
       const d = data.get('result');
 
-      if(d) {
-        setCorrectGuess(formData.SmartContractOperation.values._solution);
+      if(d && formData.SmartContractOperation) {
+        setCorrectGuess(formData.SmartContractOperation.values.solution);
       }
     });
   }, [huntEggResult]);
@@ -57,7 +57,7 @@ const HuntEgg = props => {
   const onClaimEgg = () => callMethod({
     contractInterface: 'EtherEgg',
     method: claimEgg,
-    contractAddress: '0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7',
+    contractAddress: ETHER_EGG_KOVAN_ADDRESS,
     args: [correctGuess]
   });
 
@@ -84,7 +84,7 @@ const HuntEgg = props => {
       <SmartContractOperationForm
         operation={isEggClaimableOperation}
         contractInterface='EtherEgg'
-        contractAddress='0xbAC82883e0ac1085C074d0D55844ff049Eeb16e7'
+        contractAddress={ETHER_EGG_KOVAN_ADDRESS}
         title={title}
       />
     )
