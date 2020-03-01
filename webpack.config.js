@@ -27,7 +27,6 @@ module.exports = () => {
         'react',
         'react-dom',
         'immutable',
-        'whatwg-fetch'
       ]
     },
 

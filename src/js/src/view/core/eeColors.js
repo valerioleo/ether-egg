@@ -32,15 +32,15 @@ export const ccSoftBlue = '#7186e0';
 
 // colors by function
 export const light = 'rgba(35, 49, 67, 0.60)';
-export const danger = ccScarlet;
-export const warning = ccReddishOrange;
+// export const danger = ccScarlet;
+// export const warning = ccReddishOrange;
 
 // colors by hierarchy.
 // these objects respect the MateriaUI
 // specifications
 export const primary = {
   light: '#dbe6ff',
-  main: ccWaterBlue,
+  main: '#FF8282',
   dark: '#003ca6',
   contrastText: '#fff'
 };
@@ -59,9 +59,9 @@ export const success = {
   contrast: ccWhite
 }
 
-export const error = {
-  light: '#f8d6d5',
-  main: ccScarlet,
-  dark: '#d32f2f',
-  contrastText: '#fff'
-};
+// export const error = {
+//   light: '#f8d6d5',
+//   main: ccScarlet,
+//   dark: '#d32f2f',
+//   contrastText: '#fff'
+// };

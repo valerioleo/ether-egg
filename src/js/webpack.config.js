@@ -26,8 +26,7 @@ module.exports = () => {
       vendor: [
         'react',
         'react-dom',
-        'immutable',
-        'whatwg-fetch'
+        'immutable'
       ]
     },
 
