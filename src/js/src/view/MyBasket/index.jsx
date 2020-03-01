@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
-import Section from '../common/Section';
+import Paper from '@material-ui/core/Paper';
 import {compareAddress} from '../../utils/eth-utils/data/address';
 import SmartContractConnection from '../../bridge/SmartContractConnection';
 
 const contractAddress = ETHER_EGG_KOVAN_ADDRESS;
 
-const Home = props => {
+const MyBasket = props => {
   const {
     smartContract,
     getEvents,
@@ -43,19 +43,27 @@ const Home = props => {
   }, [getEventsResult]);
 
   const renderUserEvents = () => userEvents.map(evt => (
-    // eslint-disable-next-line no-underscore-dangle
-    <Typography key={evt.transactionHash}>EggID: {evt.returnValues._foundEggId} - {evt.returnValues.guess}</Typography>
+    <Paper style={{padding: 15}} key={evt.transactionHash}>
+      <Typography variant='caption'>EggID: {evt.returnValues._foundEggId}</Typography>
+      <br/><br/>
+      <Typography variant='body2' color='textSecondary'>Found with:</Typography>
+      <Typography variant='h5' color='primary' style={{fontFamily: 'monospace'}}>{evt.returnValues.guess}</Typography>
+    </Paper>
   ));
 
   return (
-    <Section title='Your Basket!'>
-      {
-        getEventsResult.mapPattern('Success', 'Loading your eggs...', () => userEvents.length
-          ? renderUserEvents()
-          : <Typography>You don't have any egg.</Typography>)
-      }
-    </Section>
+    <>
+      <Typography variant='h3' fontWeight='bold'>My basket</Typography>
+      <Typography variant='body2'>You can verify here all the Eggs you have already found.</Typography>
+      <div style={{marginTop: 30}}>
+        {
+          getEventsResult.mapPattern('Success', 'Loading your eggs...', () => userEvents.length
+            ? renderUserEvents()
+            : <Typography>You don't have any egg.</Typography>)
+        }
+      </div>
+    </>
   );
 };
 
-export default SmartContractConnection(Home);
+export default SmartContractConnection(MyBasket);

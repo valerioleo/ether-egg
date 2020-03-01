@@ -9,12 +9,12 @@ export default theme => ({
   inputRoot: {
     borderRadius: '2px',
     border: `1px solid ${theme.palette.grey[400]}`,
-    padding: `10px ${theme.spacing.unit * 2}px`,
+    padding: `10px ${theme.spacing(2)}px`,
     '&:hover': {
       boxShadow: theme.palette.hoverShadow,
       borderColor: theme.palette.common.black
     },
-    minHeight: theme.spacing.unit * 7,
+    minHeight: theme.spacing(7),
     boxSizing: 'border-box',
     background: theme.palette.common.white
   },

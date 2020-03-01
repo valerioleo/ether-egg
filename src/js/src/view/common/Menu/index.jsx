@@ -29,7 +29,7 @@ const Menu = props => {
     >
       <ListItem button className={classes.menuItem}>
         <ListItemIcon>
-          <Typography variant='body2'>{icon}</Typography>
+          <Typography variant='h3'>{icon}</Typography>
         </ListItemIcon>
         <Typography variant='body2'>{name}</Typography>
       </ListItem>

@@ -6,7 +6,7 @@ import EggSolution from './EggSolution';
 const Home = () => {
   return (
     <>
-      <Typography variant='h1'>Hunt your Egg!</Typography>
+      <Typography variant='h3' fontWeight='bold'>Howdy!</Typography>
       <Typography variant='body2'>To start hunting, use type your solution in the input box.</Typography>
 
       <EggSolution/>

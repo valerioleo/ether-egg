@@ -3,9 +3,9 @@ import {percentToHex} from '../../../services/color';
 const style = theme => ({
   wrapper: {
     display: 'inline-block',
-    marginRight: theme.spacing.unit,
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginRight: theme.spacing(),
+    marginTop: theme.spacing(),
+    marginBottom: theme.spacing(),
     '&:last-of-type': {
       marginRight: 0
     }

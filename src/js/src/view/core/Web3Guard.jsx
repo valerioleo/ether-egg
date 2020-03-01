@@ -15,6 +15,8 @@ const Web3Guard = ({children, getDefaultAccount}) => {
     else {
       const provider = window.ethereum || window.web3.currentProvider;
 
+      getDefaultAccount();
+
       provider.on('accountsChanged', () => {
         getDefaultAccount();
       });
