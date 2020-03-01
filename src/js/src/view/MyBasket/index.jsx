@@ -63,7 +63,7 @@ const MyBasket = props => {
   };
 
   const renderUserEvents = () => userEvents.map(evt => (
-    <Paper style={{padding: 15, marginTop: 15}} key={evt.transactionHash}>
+    <Paper elevation={2} style={{padding: 15, marginTop: 15}} key={evt.transactionHash}>
       <Grid container alignItems='center'>
         <Grid item xs={3}>
           {hextToColors(toHex(evt.returnValues._foundEggId))}
